@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts', 
-    'rest_framework' 
+    'rest_framework',  # Assuming you are using Django REST Framework
+    'listings',  # Assuming you have a listings app
 ]
 
 MIDDLEWARE = [
