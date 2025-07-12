@@ -4,6 +4,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from .models import Listing
+from django.urls import path
 from .serializers import ListingSerializer
 
 @api_view(['POST'])
@@ -90,3 +91,29 @@ def reactivate_listing(request,pk):
     listting.save()
     return Response({'status': 'Listing reactivated'}, status=status.HTTP_200_OK)
    
+@api_view(['GET'])
+def search_listing(request):
+    q = request.query_params.get('q', '')
+    platform = request.query_params.get('platform', '')
+    min_price = request.query_params.get('min_price', None)
+    max_price = request.query_params.get('max_price', None)
+    is_active = request.query_params.get('is_active', None)
+    user_id = request.query_params.get('user_id', None)
+    listings = Listing.objects.all()
+    if q:
+        listings = listings.filter(platform_name__icontains=q)
+    if platform:
+        listings = listings.filter(platform_name__iexact=platform)
+    if min_price is not None:
+        listings = listings.filter(price__gte=min_price)
+    if max_price is not None:
+        listings = listings.filter(price__lte=max_price)
+    if is_active is not None:
+        is_active = is_active.lower() in ['true', '1', 'yes']
+        listings = listings.filter(is_active=is_active)
+    if user_id is not None:
+        listings = listings.filter(owner_id=user_id)
+    listings = listings.order_by('-created_at')
+    serializer = ListingSerializer(listings, many=True)
+    return Response(serializer.data)
+
