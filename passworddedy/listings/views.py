@@ -64,7 +64,7 @@ def my_listings(request):
     listings = Listing.objects.filter(owner=request.user).order_by('-created_at')
     serializer = ListingSerializer(listings, many=True)
     return Response(serializer.data)
-@api_view(['GET'])
+@api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def mark_listing_as_lent(request, pk):
     try:
@@ -77,7 +77,7 @@ def mark_listing_as_lent(request, pk):
     listing.is_active = False
     listing.save()
     return Response({'status': 'Listing marked as lent'}, status=status.HTTP_200_OK)
-@api_view(['GET'])
+@api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def reactivate_listing(request,pk): 
     try:
