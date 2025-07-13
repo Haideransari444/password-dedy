@@ -6,6 +6,7 @@ from rest_framework import status
 from .models import Listing
 from django.urls import path
 from .serializers import ListingSerializer
+from .utils import notify
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -46,7 +47,12 @@ def restore_listing(request, pk):
     
     listing.is_active = True
     listing.save()
+    notify(request.user, f"Your listing '{listing.platform_name}' has been restored.")
+    # Notify the user about the change
     return Response({'status': 'Listing restored'}, status=status.HTTP_200_OK)
+
+
+
 
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
@@ -57,7 +63,11 @@ def delete_listing(request, pk):
         return Response({'error': 'Listing not found'}, status=status.HTTP_404_NOT_FOUND)
     
     listing.delete()
+    notify(request.user, f"Your listing '{listing.platform_name}' has been deleted.")
+    # Notify the user about the change
     return Response({'status': 'Listing deleted'}, status=status.HTTP_204_NO_CONTENT)
+
+
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -65,6 +75,9 @@ def my_listings(request):
     listings = Listing.objects.filter(owner=request.user).order_by('-created_at')
     serializer = ListingSerializer(listings, many=True)
     return Response(serializer.data)
+
+
+
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def mark_listing_as_lent(request, pk):
@@ -77,7 +90,12 @@ def mark_listing_as_lent(request, pk):
     
     listing.is_active = False
     listing.save()
+    notify(request.user, f"Your listing '{listing.platform_name}' has been marked as lent.")
+    # Notify the user about the change
     return Response({'status': 'Listing marked as lent'}, status=status.HTTP_200_OK)
+
+
+
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def reactivate_listing(request,pk): 
@@ -89,8 +107,13 @@ def reactivate_listing(request,pk):
         return Response({'error': 'Listing is already active'}, status=status.HTTP_400_BAD_REQUEST)
     listting.is_active = True
     listting.save()
+    notify(request.user, f"Your listing '{listting.platform_name}' has been reactivated.")
+    # Notify the user about the change
     return Response({'status': 'Listing reactivated'}, status=status.HTTP_200_OK)
    
+
+
+
 @api_view(['GET'])
 def search_listing(request):
     q = request.query_params.get('q', '')
