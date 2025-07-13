@@ -22,6 +22,7 @@ class CustomUser(AbstractUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
     bio = models.TextField(blank=True, null=True)
+    avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
