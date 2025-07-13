@@ -10,5 +10,6 @@ urlpatterns = [
     path('<int:pk>/restore/', views.restore_listing, name='restore_listing'),        # PATCH
     path('<int:pk>/mark-lent/', views.mark_listing_as_lent, name='mark_listing_lent'),  # POST
     path('<int:pk>/reactivate/', views.reactivate_listing, name='reactivate_listing'),  # POST
-    path('search/', views.search_listing, name='search_listing'),                    # GET with filters
+    path('search/', views.search_listing, name='search_listing'), 
+    path('<int:listing_id>/update/', views.update_listing),                 
 ]

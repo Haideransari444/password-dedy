@@ -2,6 +2,7 @@ from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
+from utils import animate, run_request, session, BASE_URL, headers
 from rest_framework import status
 from .models import Listing
 from django.urls import path
@@ -89,6 +90,7 @@ def mark_listing_as_lent(request, pk):
         return Response({'error': 'Listing is already marked as lent'}, status=status.HTTP_400_BAD_REQUEST)
     
     listing.is_active = False
+    listing.status = 'lent'
     listing.save()
     notify(request.user, f"Your listing '{listing.platform_name}' has been marked as lent.")
     # Notify the user about the change
@@ -140,3 +142,16 @@ def search_listing(request):
     serializer = ListingSerializer(listings, many=True)
     return Response(serializer.data)
 
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def update_listing(request, listing_id):
+    try:
+        listing = Listing.objects.get(id=listing_id, owner=request.user)
+    except Listing.DoesNotExist:
+        return Response({'error': 'Not found'}, status=404)
+
+    serializer = ListingSerializer(listing, data=request.data, partial=True)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(serializer.errors, status=400)
