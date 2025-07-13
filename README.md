@@ -1,4 +1,4 @@
-# 🎬 Password Dedy
+# 🟥 Password Dedy
 
 > A peer-to-peer platform to lend and borrow premium digital accounts affordably and securely — built for students.
 
@@ -12,33 +12,33 @@
 
 ## 🧠 Infographics
 
-| 🎯 Target Users     | 🔒 Security             | 💬 Communication          | 💸 Monetization           |
-|---------------------|--------------------------|----------------------------|----------------------------|
+| 🎯 **Target Users**     | 🔒 **Security**             | 💬 **Communication**          | 💸 **Monetization**           |
+|-------------------------|------------------------------|-------------------------------|-------------------------------|
 | Students looking for affordable premium tools | Visibility control, session auth, moderation | Borrowers chat with lenders directly | Listing fees via PayFast for secure earnings |
 
 ---
 
 ## 🚀 Key Features
 
-- ✅ Email-based registration and login  
-- 🔐 Session authentication with CSRF protection  
-- 📤 Create, delete, and toggle listing visibility  
-- 💬 In-app borrower/lender chat  
-- 🔔 Notifications panel  
-- 🛡️ Admin moderation tools  
-- 💳 PayFast integration for listing fees  
+- ✅ **Email-based registration and login**  
+- 🔐 **Session authentication with CSRF protection**  
+- 📤 **Create, delete, and toggle listing visibility**  
+- 💬 **In-app borrower/lender chat**  
+- 🔔 **Notifications panel**  
+- 🛡️ **Admin moderation tools**  
+- 💳 **PayFast integration for listing fees**  
 
 ---
 
 ## 🛠 Tech Stack
 
-- **Backend:** Django + Django REST Framework  
-- **Database:** Supabase (PostgreSQL)  
-- **Frontend:** React (via V0.dev)  
-- **Auth:** Custom Django user model  
-- **Media:** Cloudinary  
-- **Hosting:** Render  
-- **Payments:** PayFast API  
+- 🧩 **Backend:** Django + Django REST Framework  
+- 🗃️ **Database:** Supabase (PostgreSQL)  
+- 🎨 **Frontend:** React (via V0.dev)  
+- 🔐 **Auth:** Custom Django user model  
+- 🖼️ **Media:** Cloudinary  
+- 🌐 **Hosting:** Render  
+- 💸 **Payments:** PayFast API  
 
 ---
 
