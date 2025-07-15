@@ -9,6 +9,10 @@ from rest_framework.response import Response
 from .serializers import  UserProfileSerializer
 from listings.models import Listing  # for stats
 from django.db.models import Sum
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from django.contrib.auth import get_user_model
 
 @api_view(['POST']) 
 def register_view(request): 
@@ -69,3 +73,12 @@ def user_stats(request):
         'currently_lent': lent,
         'monthly_earnings': earnings,
     })
+
+User = get_user_model()
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def list_all_users(request):
+    users = User.objects.all().values('id', 'email')
+    return Response(list(users))
+

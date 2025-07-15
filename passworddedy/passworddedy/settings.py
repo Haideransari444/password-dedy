@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     'accounts', 
     'rest_framework',  # Assuming you are using Django REST Framework
     'listings',  # Assuming you have a listings app
-    'notifications',  # Assuming you have a notifications app
+    'notifications', 
+    'chat',
+    'moderation' # Assuming you have a notifications app
 ]
 
 MIDDLEWARE = [
